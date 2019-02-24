@@ -49,7 +49,23 @@ def upload():
             return redirect(url_for('home'))
 
     return render_template('upload.html',form=form)
+def get_uploaded_images():
+    if not session.get('logged_in'):
+        abort(401)
+    
+    rootdir = os.getcwd()
+    images = []
+    for subdir, dirs, files in os.walk(rootdir + '/app/static/uploads'):
+	    for file in files:
+	        images.append(os.path.join(subdir, file).split('/')[-1])
+    return images
 
+@app.route('/files')
+def files():
+    if not session.get('logged_in'):
+        abort(401)
+    images = get_uploaded_images()
+    return render_template('files.html',images=images)
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():

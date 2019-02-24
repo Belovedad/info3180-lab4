@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block main %}
+{% include 'flash_messages.html' %}
+<h1>Images</h1>
+
+
+<div class = 'flexbox'>
+    {% for i in images: %}
+    <div>
+        <img class='imgs' src="{{ url_for('static', filename='uploads/'+i) }}"></img>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
